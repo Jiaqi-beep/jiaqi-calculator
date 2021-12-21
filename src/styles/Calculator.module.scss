@@ -1,0 +1,48 @@
+.border {
+    width: 400px;
+    height: 500px;
+    border-radius: 10px;
+    outline: solid 2px #e6e6e6;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.screen {
+    padding: 1rem;
+    height: 100px;
+    width: auto;
+}
+
+.buttonsWrapper {
+    display: inline-grid;
+    padding: 1.3rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 10px;
+    justify-items: center; // center button within grid cell
+}
+
+.buttonsWrapper button {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    // border: 1.5px solid black;
+    font-size: 1.2em;
+}
+
+.funcButton {
+    background-color: #bbb;
+}
+
+.opButton {
+    background-color: tan;
+}
+
+.numButton {
+    background-color: steelblue;
+    .zeroButton {
+        width: 140px;
+        border-radius: 25px;
+    }
+}
