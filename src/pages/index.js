@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 import Screen from "../components/Screen";
 import ButtonBox from "../components/ButtonBox";
 
-export default function Home() {
+export default function Home({num, setNum}) {
 
   return (
     <div>
@@ -18,8 +18,8 @@ export default function Home() {
       <div className={styles.main}>
         <h2 className={styles.title}>Practice React with a Simple Calculator</h2>
         <Layout>
-          <Screen />
-          <ButtonBox />
+          <Screen num={num}/>
+          <ButtonBox setNum={setNum} />
         </Layout>
       </div>
 
