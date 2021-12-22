@@ -1,8 +1,7 @@
-import { useState } from "react";
 import "../styles/global.css";
 
-export default function App({ Component, pageProps }) {
-  const [num, setNum] = useState(0);
-  
-  return <Component {...pageProps} {...num} {...setNum}/>
+function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps}/>
 }
+
+export default MyApp;
