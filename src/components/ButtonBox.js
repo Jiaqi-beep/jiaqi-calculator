@@ -8,16 +8,32 @@ export default function ButtonBox({ num, setNum }) {
             ...num,
             opt: "",
             ans: 0,
-            tempAns: undefined
+            tempAns: undefined,
+            dot: false
         })
     }
 
+    // https://stackoverflow.com/questions/17369098/simplest-way-of-getting-the-number-of-decimals-in-a-number-in-javascript
+    function countDecimals(value) {
+        if (Math.floor(value) === value) return 0;
+        return value.toString().split(".")[1].length || 0;
+    }
+
     function setNumberClick(symbol) {
-        setNum({
-            ...num,
-            tempAns: num.tempAns === undefined
-                ? symbol : num.tempAns * 10 + symbol
-        });
+        if (num.dot) {
+            setNum({
+                ...num,
+                tempAns: num.tempAns === undefined
+                    ? symbol * 0.1 : num.tempAns + Math.pow(10, (-1) * (countDecimals(num.tempAns) + 1)) * symbol
+            });
+            console.log(num);
+        } else {
+            setNum({
+                ...num,
+                tempAns: num.tempAns === undefined
+                    ? symbol : num.tempAns * 10 + symbol
+            });
+        }
     }
 
     function processOpt() {
@@ -31,19 +47,25 @@ export default function ButtonBox({ num, setNum }) {
 
     function setOptClick(symbol) {
         if (symbol === ".") {
-            setNum({ ...num }); // change
+            setNum({ ...num, dot: true }); // change
         } else if (symbol === "=") {
             const temp = num.tempAns === undefined
                 ? num.ans : num.opt === ""
                     ? num.tempAns : processOpt();
             setNum({
-                ...num, opt: "", tempAns: temp
+                ...num, opt: "", tempAns: temp, dot: false
             });
         } else { // -, +, /, *
-            if (num.tempAns === undefined || num.ans === undefined){
-                setNum({...num, opt:symbol});
+            if (num.tempAns === undefined || num.ans === undefined) {
+                setNum({ ...num, opt: symbol, dot: false });
             } else {
-                setNum({ ...num, ans: processOpt(), opt: symbol, tempAns: undefined });
+                setNum({
+                    ...num,
+                    ans: processOpt(),
+                    opt: symbol,
+                    tempAns: undefined,
+                    dot: false
+                });
             }
         }
     }

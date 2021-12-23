@@ -12,7 +12,8 @@ export default function Home() {
     {
       opt: "",
       ans: 0,
-      tempAns: undefined
+      tempAns: undefined,
+      dot: false,
     });
 
   return (
