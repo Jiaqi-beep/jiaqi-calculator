@@ -1,3 +1,5 @@
+$numButton-color: steelblue;
+
 .border {
     width: 24.375rem; //390px
     height: 500px;
@@ -61,7 +63,7 @@
 }
 
 .numButton {
-    background-color: steelblue;
+    background-color: $numButton-color;
 }
 
 .buttonsWrapper .zeroButton{

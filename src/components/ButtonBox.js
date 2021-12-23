@@ -1,7 +1,20 @@
 
+import { useEffect } from "react";
+import { useState } from "react/cjs/react.development";
 import styles from "../styles/Calculator.module.scss";
 
 export default function ButtonBox({ num, setNum }) {
+
+    function getRandomColor() {
+        const colors = ["#E6E047", "#4682B4", "#3C4AE6", "#7125E6", "#E0B660"];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    const [buttonColor, setButtonColor] = useState(getRandomColor());
+
+    useEffect(() => {
+        setButtonColor(getRandomColor());
+    }, [num])
 
     function resetCalc() {
         setNum({
@@ -15,8 +28,8 @@ export default function ButtonBox({ num, setNum }) {
 
     function setNumberClick(symbol) {
         if (num.opt === "=") {
-            setNum({...num, tempAns: symbol, opt: ""});
-        }else if (num.decimals > 0) {
+            setNum({ ...num, tempAns: symbol, opt: "" });
+        } else if (num.decimals > 0) {
             setNum({
                 ...num,
                 tempAns: num.tempAns === undefined
@@ -59,7 +72,6 @@ export default function ButtonBox({ num, setNum }) {
                 tempAns: undefined,
                 decimals: 0
             });
-            console.log(num);
         }
     }
 
@@ -73,6 +85,17 @@ export default function ButtonBox({ num, setNum }) {
         }
     }
 
+    const handleNewOption = (e) => {
+        //on enter in search bar
+        if (e.key === "Enter") {
+            const res = addNewOption(e.target.value);
+            if (res) {
+                e.target.value = "";
+                //setValue("");
+            }
+        }
+    };
+
     const buttonList = ["C", "+/-", "%", "÷", 7, 8,
         9, "x", 4, 5, 6, "-",
         1, 2, 3, "+", 0, ".", "="];
@@ -85,6 +108,7 @@ export default function ButtonBox({ num, setNum }) {
                         <div className={styles.zero}>
                             <button
                                 className={styles.zeroButton}
+                                style={{ "background-color": buttonColor }}
                                 key={symbol}
                                 onClick={() => setNumberClick(symbol)}>0
                             </button>
@@ -93,6 +117,7 @@ export default function ButtonBox({ num, setNum }) {
                 } else if (typeof symbol === "number" && symbol !== 0) {
                     return (
                         <button
+                            style={{ "background-color": buttonColor }}
                             className={styles.numButton}
                             key={symbol}
                             onClick={() => setNumberClick(symbol)}>{symbol}
@@ -108,9 +133,11 @@ export default function ButtonBox({ num, setNum }) {
                     return (
                         <button
                             className={styles.optButton}
+                            type="button"
                             key={symbol}
                             onClick={() => setOptClick(symbol)}>{symbol}
-                        </button>)
+                        </button>
+                    )
                 }
             })}
         </div>
