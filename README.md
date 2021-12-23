@@ -3,4 +3,4 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 This is a simple calculator developed to practise CSS positioning and React components logic.
 
-![Screenshot](/screenshot.png)
+![Screenshot](/public/screenshot.png)
