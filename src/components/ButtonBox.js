@@ -9,24 +9,20 @@ export default function ButtonBox({ num, setNum }) {
             opt: "",
             ans: 0,
             tempAns: undefined,
-            dot: false
+            decimals: 0
         })
     }
 
-    // https://stackoverflow.com/questions/17369098/simplest-way-of-getting-the-number-of-decimals-in-a-number-in-javascript
-    function countDecimals(value) {
-        if (Math.floor(value) === value) return 0;
-        return value.toString().split(".")[1].length || 0;
-    }
-
     function setNumberClick(symbol) {
-        if (num.dot) {
+        if (num.opt === "=") {
+            setNum({...num, tempAns: symbol, opt: ""});
+        }else if (num.decimals > 0) {
             setNum({
                 ...num,
                 tempAns: num.tempAns === undefined
-                    ? symbol * 0.1 : num.tempAns + Math.pow(10, (-1) * (countDecimals(num.tempAns) + 1)) * symbol
+                    ? symbol * 0.1 : Math.pow(10, -1 * num.decimals) * symbol + num.tempAns,
+                decimals: ++num.decimals
             });
-            console.log(num);
         } else {
             setNum({
                 ...num,
@@ -47,26 +43,23 @@ export default function ButtonBox({ num, setNum }) {
 
     function setOptClick(symbol) {
         if (symbol === ".") {
-            setNum({ ...num, dot: true }); // change
+            setNum({ ...num, decimals: ++num.decimals });
         } else if (symbol === "=") {
             const temp = num.tempAns === undefined
                 ? num.ans : num.opt === ""
                     ? num.tempAns : processOpt();
             setNum({
-                ...num, opt: "", tempAns: temp, dot: false
+                ...num, opt: "=", tempAns: temp, decimals: 0
             });
         } else { // -, +, /, *
-            if (num.tempAns === undefined || num.ans === undefined) {
-                setNum({ ...num, opt: symbol, dot: false });
-            } else {
-                setNum({
-                    ...num,
-                    ans: processOpt(),
-                    opt: symbol,
-                    tempAns: undefined,
-                    dot: false
-                });
-            }
+            setNum({
+                ...num,
+                ans: num.tempAns === undefined ? num.ans : processOpt(),
+                opt: symbol,
+                tempAns: undefined,
+                decimals: 0
+            });
+            console.log(num);
         }
     }
 

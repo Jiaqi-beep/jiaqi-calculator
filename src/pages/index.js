@@ -13,7 +13,7 @@ export default function Home() {
       opt: "",
       ans: 0,
       tempAns: undefined,
-      dot: false,
+      decimals: 0,
     });
 
   return (
