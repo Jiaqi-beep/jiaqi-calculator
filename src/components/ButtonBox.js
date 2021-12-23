@@ -1,6 +1,5 @@
 
-import { useEffect } from "react";
-import { useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react";
 import styles from "../styles/Calculator.module.scss";
 
 export default function ButtonBox({ num, setNum }) {
